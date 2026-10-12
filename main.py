@@ -9,16 +9,15 @@ app = FastAPI(
 
 
 class Book(BaseModel):
-    id: int = Field(..., description="Unique identifier for the book")
-    title: str = Field(..., description="Title of the book")
-    author: str = Field(..., description="Author of the book")
-    year: int = Field(..., description="Publication year")
-
+    id: int = Field(gt=0, description="Unique identifier for the book")
+    title: str = Field(min_length=1, description="Title of the book")
+    author: str = Field(min_length=1, description="Author of the book")
+    year: int = Field(gt=0, description="Publication year")
 
 class BookUpdate(BaseModel):
-    title: str | None = Field(default=None, description="Title of the book")
-    author: str | None = Field(default=None, description="Author of the book")
-    year: int | None = Field(default=None, description="Publication year")
+    title: str | None = Field(default=None, description="Title of the book", min_length=1)
+    author: str | None = Field(default=None, description="Author of the book", min_length=1)
+    year: int | None = Field(default=None, description="Publication year", gt=0)
 
 
 # In-memory storage with initial sample data
